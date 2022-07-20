@@ -15,36 +15,36 @@ transaction_api = Api(transaction_bp)
 member_api = Api(member_bp)
 
 transaction_api.add_resource(
-    RestockCTRL,
-    RestockCTRL.LIST_URL,
-    RestockCTRL.CREATE_URL
+    RestockController,
+    RestockController.LIST_URL,
+    RestockController.CREATE_URL
 )
 transaction_api.add_resource(
-    RestockDataCTRL,
-    RestockDataCTRL.LIST_URL,
-    RestockDataCTRL.CREATE_URL
+    RestockDataController,
+    RestockDataController.LIST_URL,
+    RestockDataController.CREATE_URL
 )
 transaction_api.add_resource(
-    TransactionCTRL,
-    TransactionCTRL.LIST_URL,
-    TransactionCTRL.CREATE_URL
+    TransactionController,
+    TransactionController.LIST_URL,
+    TransactionController.CREATE_URL
 )
 
 transaction_api.add_resource(
-    RestockDetailCTRL,
-    RestockDetailCTRL.LIST_URL,
-    RestockDetailCTRL.CREATE_URL
+    RestockDetailController,
+    RestockDetailController.LIST_URL,
+    RestockDetailController.CREATE_URL
 )
 
 member_api.add_resource(
-    CustomerCTRL,
-    CustomerCTRL.LIST_URL,
-    CustomerCTRL.CREATE_URL
+    CustomerController,
+    CustomerController.LIST_URL,
+    CustomerController.CREATE_URL
 )
 member_api.add_resource(
-    EmployeeCTRL,
-    EmployeeCTRL.LIST_URL,
-    EmployeeCTRL.CREATE_URL
+    EmployeeController,
+    EmployeeController.LIST_URL,
+    EmployeeController.CREATE_URL
 )
 
 product_api.add_resource(

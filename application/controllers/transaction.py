@@ -11,7 +11,7 @@ from db import db
 import uuid
 # import json 
 
-class TransactionCTRL(Resource):
+class TransactionController(Resource):
     LIST_URL = '/transaction/<trans_id>'
     CREATE_URL = '/transaction'
 
@@ -79,7 +79,7 @@ class TransactionCTRL(Resource):
         db.session.commit()
         return 
 
-class RestockDataCTRL(Resource):
+class RestockDataController(Resource):
     LIST_URL = '/restock_data/<supplier_id>'
     CREATE_URL = '/restock_data'
 
@@ -108,7 +108,7 @@ class RestockDataCTRL(Resource):
         } 
         return  json
 
-class RestockDetailCTRL(Resource):
+class RestockDetailController(Resource):
     LIST_URL = '/restock_detail/<restock_id>'
     CREATE_URL = '/restock_detail'
     def get(self, restock_id):
@@ -147,7 +147,7 @@ class RestockDetailCTRL(Resource):
         return restock_detail_json
 
 
-class RestockCTRL(Resource):
+class RestockController(Resource):
     LIST_URL = '/restock/<restock_id>'
     CREATE_URL = '/restock'
 
