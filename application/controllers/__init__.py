@@ -30,6 +30,12 @@ transaction_api.add_resource(
     TransactionCTRL.CREATE_URL
 )
 
+transaction_api.add_resource(
+    RestockDetailCTRL,
+    RestockDetailCTRL.LIST_URL,
+    RestockDetailCTRL.CREATE_URL
+)
+
 member_api.add_resource(
     CustomerCTRL,
     CustomerCTRL.LIST_URL,

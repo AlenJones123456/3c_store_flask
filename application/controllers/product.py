@@ -7,7 +7,7 @@ from db import db
 from ..models.product import Product
 from ..models.brand import Brand
 from ..models.category import Category
-from ..models.supplier import Supplier
+from ..models.member import Supplier
 
 class ProductAPI(Resource):
 

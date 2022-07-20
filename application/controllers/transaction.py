@@ -108,6 +108,45 @@ class RestockDataCTRL(Resource):
         } 
         return  json
 
+class RestockDetailCTRL(Resource):
+    LIST_URL = '/restock_detail/<restock_id>'
+    CREATE_URL = '/restock_detail'
+    def get(self, restock_id):
+        restock_detail = db.session.query(
+                                ReStockDetail, 
+                                Sku.sku_code,
+                                Product.product_name
+                            ).join(
+                                Sku, 
+                                ReStockDetail.sku_id == Sku.sku_id, 
+                                isouter = True
+                            ).join(
+                                Product,
+                                Sku.product_id == Product.product_id, 
+                                isouter = True
+                            ).filter(
+                                ReStockDetail.restock_id == restock_id
+                            ).all()
+
+        print(restock_detail)
+        if not restock_detail:
+            return {'message':'查無此交易紀錄明細'}
+
+        restock_detail_json = {
+            'data': [{
+                            'product_name': record[2],
+                            'sku_id': record[0].sku_id,
+                            'sku_code': record[1],
+                            'serial_id': record[0].serial_id,
+                            'sale_price': record[0].sale_price,
+                            'quantity': record[0].quantity,
+                            'memo': record[0].memo
+                        } for record in restock_detail],
+            'title': 'restock_detail'
+        } 
+        return restock_detail_json
+
+
 class RestockCTRL(Resource):
     LIST_URL = '/restock/<restock_id>'
     CREATE_URL = '/restock'
@@ -144,7 +183,7 @@ class RestockCTRL(Resource):
                             'employee_name': record[1],
                             'supplier_id': record[0].supplier_id,
                             'supplier_name': record[2],
-                            'restock_date': record[0].restock_date.strftime("%m/%d/%Y, %H:%M:%S"),
+                            'restock_date': record[0].restock_date.strftime("%Y-%m-%d %H:%M:%S"),
                             'total_price': record[0].total_price
                         } for record in restock],
             'title': 'restock'
