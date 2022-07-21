@@ -1,9 +1,6 @@
 from flask import Flask
-
-from product import *
 from sku import *
-from transaction import *
-from member import *
+from application.controllers import *
 
 #建立Flask APP
 def create_app(config_filename):
@@ -16,9 +13,10 @@ def create_app(config_filename):
 
 #註冊API
 def register_blueprints(app):
-    app.register_blueprint(product_api, url_prefix="/3c_store/api/v1"+"/product")
-    app.register_blueprint(sku_api, url_prefix="/3c_store/api/v1"+"/sku")
-    app.register_blueprint(transaction_api, url_prefix="/3c_store/api/v1"+"/transaction")
+    app.register_blueprint(product_bp, url_prefix="/3c_store/api/v1"+"/product")
+    app.register_blueprint(member_bp, url_prefix="/3c_store/api/v1"+"/member")
+    app.register_blueprint(sku_bp, url_prefix="/3c_store/api/v1"+"/sku")
+    app.register_blueprint(transaction_bp, url_prefix="/3c_store/api/v1"+"/transaction")
 
 #註冊擴充
 def register_extension(app):

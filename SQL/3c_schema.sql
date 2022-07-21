@@ -4,9 +4,9 @@ CREATE TABLE category(
     category_id int primary key,  #分類id auto_increment
     category_code char(2) ,  #分類縮寫 不可重複 SP=手機 AC=配件 NB=筆電 產生規則:取縮寫(手動)
     category_name nvarchar(100), #分類名稱   手機,配件,筆電
-    category_level int(1), #級別
-    parent_id int(128) #父類id
-    
+    category_level int, #級別
+    parent_id int #父類id
+       
 )
 
 /*商品基本檔*/
@@ -108,8 +108,28 @@ CREATE TABLE trans_detail(
     quantity int(4), #數量  if (serial_id is not null){quantity set 1} 
     memo varchar(300), #商品備註
 )
-ALTER TABLE trans_record ADD primary key(trans_id, sku_id) #複合PK
+ALTER TABLE trans_detail ADD primary key(trans_id, sku_id) #複合PK
 
+/* 進貨記錄表 */
+CREATE TABLE restock_record(
+    restock_id char(36), #進貨號 PK  產生規則:uuid
+    # order_stats int(1), #訂單狀態
+    employee_id char(7), #employee.employee_id FK 員工id
+    supplier_id char(7), #supplier.supplier_id FK 廠商id
+    restock_date datetime, #進貨時間
+    total_price int #總成交金額
+)
+
+/*進貨紀錄明細檔*/
+CREATE TABLE restock_detail(
+    restock_id char(36),  #交易記錄id 主鍵 fk 
+    sku_id char(11), #sku.sku_id FK sku商品id
+    serial_id char(128), # serial_product.serial_id FK 產品序列號
+    sale_price int ,#單品最終銷售金額
+    quantity int(4), #數量  if (serial_id is not null){quantity set 1} 
+    memo varchar(300), #商品備註
+)
+ALTER TABLE restock_detail ADD primary key(restock_id, sku_id) #複合PK
 
 /*序列商品基本檔*/
 CREATE TABLE serial_product(

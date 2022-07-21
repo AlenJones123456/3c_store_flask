@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+    <form action="http://127.0.0.1:5000/3c_store/api/v1/transaction/restock" method="post">
+        <input type="text" id="fname" name="employee_id" value="E000001"><br>
+        <input type="text" id="fname" name="supplier_id" value="1"><br>
+        <label for="fname">sku_id:</label><br>
+        <input type="text" id="fname" name="sku_id[]"><br>
+        <label for="lname">sale_price:</label><br>
+        <input type="text" id="lname" name="sale_price[]"><br><br>
+        <label for="lname">quantity:</label><br>
+        <input type="text" id="lname" name="quantity[]"><br><br>
+        <label for="lname">memo:</label><br>
+        <input type="text" id="lname" name="memo[]"><br><br>
+        
+        <label for="fname">sku_id:</label><br>
+        <input type="text" id="fname" name="sku_id[]"><br>
+        <label for="lname">sale_price:</label><br>
+        <input type="text" id="lname" name="sale_price[]"><br><br>
+        <label for="lname">quantity:</label><br>
+        <input type="text" id="lname" name="quantity[]"><br><br>
+        <label for="lname">memo:</label><br>
+        <input type="text" id="lname" name="memo[]"><br><br>
+        <button type="submit" value="Submit">submit</button>
+    </form>
+
+</body>
+</html>

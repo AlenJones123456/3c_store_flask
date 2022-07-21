@@ -8,3 +8,5 @@ Pipfile.lock
 
 # python
 **/__pycache__
+**/test_api
+**/test_tb

@@ -1,0 +1,19 @@
+
+    {
+        "data": {
+            "brand_list":{
+                "brand_id":["B0001", "B0002","B0003"],
+            "brand_name":["SAMSUNG","APPLE","ASUS"]
+        },
+        "supplier_list":{
+            "supplier_id":["1","2","3"],
+            "supplier_name":["pchome","shopee","genuine"]
+        },
+        "category_list":{
+            "category_id":["1","2","3"],
+            "category_name":["Notebook","Smartphone","Screen"]
+        },
+        "title": "product_create"
+      }
+    }
+  
