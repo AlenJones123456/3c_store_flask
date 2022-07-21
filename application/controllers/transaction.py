@@ -108,19 +108,19 @@ class RestockDataController(Resource):
                 json['data'].append(
                 {
                     'product_id': record[1], 
+                    'product_name': record[2], 
                     'sku':[]  
                 })
 
             json['data'][-1]['sku'].append(
             {   
-                'sku_id': record[0],
-                'product_name': record[2],
+                'sku_id': record[0],    
                 'sku_code': record[3],
                 'cost': record[4]
             }    
             )
             previous_product_id = record[1]  
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+
         return  json
 
 class RestockDetailController(Resource):
