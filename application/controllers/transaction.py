@@ -86,6 +86,7 @@ class RestockDataController(Resource):
     def get(self, supplier_id):
         sku = db.session.query(
                                 Sku.sku_id,
+                                Product.product_id,
                                 Product.product_name,
                                 Sku.sku_code,
                                 Sku.cost
@@ -95,17 +96,31 @@ class RestockDataController(Resource):
                                 isouter = True
                             ).filter(
                                 Product.supplier_id == supplier_id
-                            ).all()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                            ).all()
         json = {
-            'data': [{   
-                        'product_id': record[0],
-                        'sku_id': record[1],
-                        'product_name': record[2],
-                        'sku_code': record[3],
-                        'cost': record[4]
-                    } for record in sku],
+            'data': [],
             'title': 'sku_restock'
-        } 
+        }
+
+        previous_product_id = ''
+        for record in sku:            
+            if record[1]!=previous_product_id:
+                json['data'].append(
+                {
+                    'product_id': record[1], 
+                    'sku':[]  
+                })
+
+            json['data'][-1]['sku'].append(
+            {   
+                'sku_id': record[0],
+                'product_name': record[2],
+                'sku_code': record[3],
+                'cost': record[4]
+            }    
+            )
+            previous_product_id = record[1]  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
         return  json
 
 class RestockDetailController(Resource):
@@ -189,7 +204,6 @@ class RestockController(Resource):
             'title': 'restock'
         } 
         return restock_json
-        return 200
     
     def post(self):
         parser = reqparse.RequestParser()
