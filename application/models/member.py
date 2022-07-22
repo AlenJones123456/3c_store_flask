@@ -85,3 +85,4 @@ class Supplier(db.Model):
     last_instock_time = db.Column(db.DateTime(), nullable=False)
     
     db_supp_product = db.relationship("Product", backref="supplier")
+

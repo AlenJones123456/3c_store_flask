@@ -30,6 +30,14 @@ transaction_api.add_resource(
     TransactionController,
     TransactionController.LIST_URL,
     TransactionController.CREATE_URL
+
+)
+
+transaction_api.add_resource(
+    RestockDetailController,
+    RestockDetailController.LIST_URL,
+    RestockDetailController.CREATE_URL
+
 )
 
 member_api.add_resource(
