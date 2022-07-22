@@ -10,7 +10,6 @@ from db import db
 
 import uuid
 
-
 class TransactionController(Resource):
     LIST_URL = '/transaction/<trans_id>'
     CREATE_URL = '/transaction'

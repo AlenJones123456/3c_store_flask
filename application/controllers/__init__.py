@@ -4,15 +4,17 @@ from flask_restful import Api
 from .transaction import *
 from .member import *
 from .product import *
+from .sku import *
 
-transaction_bp = Blueprint('transaction', __name__)
-member_bp = Blueprint('member', __name__)
-product_bp = Blueprint('product', __name__)
-sku_bp = Blueprint('sku', __name__)
+transaction_bp = Blueprint('transaction', __name__, url_prefix="/3c_store/api/v1"+"/transaction")
+member_bp = Blueprint('member', __name__, url_prefix="/3c_store/api/v1"+"/member")
+product_bp = Blueprint('product', __name__, url_prefix="/3c_store/api/v1"+"/product")
+sku_bp = Blueprint('sku', __name__, url_prefix="/3c_store/api/v1"+"/sku")
 
 product_api = Api(product_bp)
 transaction_api = Api(transaction_bp)
 member_api = Api(member_bp)
+sku_api = Api(sku_bp)
 
 transaction_api.add_resource(
     RestockController,
@@ -28,12 +30,14 @@ transaction_api.add_resource(
     TransactionController,
     TransactionController.LIST_URL,
     TransactionController.CREATE_URL
+
 )
 
 transaction_api.add_resource(
     RestockDetailController,
     RestockDetailController.LIST_URL,
     RestockDetailController.CREATE_URL
+
 )
 
 member_api.add_resource(
@@ -48,17 +52,30 @@ member_api.add_resource(
 )
 
 product_api.add_resource(
-    ProductAPI,
-    ProductAPI.LIST_URL
+    ProductController,
+    ProductController.LIST_URL,
+    ProductController.CREATE_URL
+    
 )
 
 product_api.add_resource(
-    AddProduct,
-    AddProduct.LIST_URL
+    AddProductController,
+    AddProductController.LIST_URL
 )
 
 product_api.add_resource(
-    ProductsList,
-    ProductsList.LIST_URL
+    ProductsListController,
+    ProductsListController.LIST_URL
 )
 
+sku_api.add_resource(
+    SkuController,
+    SkuController.LIST_URL,
+    SkuController.CREATE_URL
+)
+
+sku_api.add_resource(
+    SkuDataController,
+    SkuDataController.LIST_URL,
+    SkuDataController.CREATE_URL
+)
