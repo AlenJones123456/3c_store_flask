@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask_restful import Resource, reqparse
 from ..models.product import Product
-from flask import abort
+from flask import abort,make_response,jsonify
 import traceback,sys
 def abort_msg(e):
     error_class = e.__class__.__name__ # 引發錯誤的 class
@@ -33,7 +33,7 @@ class ProductController(Resource):
     def post(self):
         return {"message":'請至/addproduct 新增產品'}
 
-    # 更新產品資料
+    # 更新產品資料by product_id
     def put(self):
         try:
             parser = reqparse.RequestParser()
@@ -64,17 +64,16 @@ class ProductController(Resource):
             return {'message': f'delete product failed'}
 
 
-
 class ProductsListController(Resource):
     LIST_URL='/products/'
-    parser = reqparse.RequestParser()
-    parser.add_argument('product_name', required=True, help='Product Name is required')
-    parser.add_argument('product_model', required=True, help='Product Model is required')
-    
+   
     # 取得所有產品記錄
     def get(self):
         product_list_json = Product.getProductList()
-        return product_list_json
+        response = make_response(jsonify(product_list_json),  200, )   
+        response.headers["Content-Type"] = "application/json"
+        response.headers["Access-Control-Allow-Origin"] = "http://localhost:4200"
+        return response
 
 class AddProductController(Resource):
 
