@@ -6,6 +6,7 @@ from flask_restful import Resource, reqparse
 from db import db
 from application.models.sku import Sku
 from application.models.product import Product
+from application.models.chkrecord import ChkRecord
 
 class SkuController(Resource):
     LIST_URL = '/sku/<sku_id>'
@@ -120,7 +121,7 @@ class AddSkuController(Resource):
 
     def get(self):
         try:
-            select_list = Sku.createP_selectList()
+            select_list = Sku.createSku_selectList()
             return select_list
         except Exception as e:
             print (e)
