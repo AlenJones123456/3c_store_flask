@@ -6,6 +6,7 @@ from flask_restful import Resource, reqparse
 from db import db
 from application.models.sku import Sku
 from application.models.product import Product
+# from application.models.chkrecord import ChkRecord
 
 class SkuController(Resource):
     LIST_URL = '/sku/<sku_id>'
@@ -30,19 +31,26 @@ class SkuController(Resource):
         return sku_json
     
     def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('sku_id', type=str,required=True, location=['form'])
-        parser.add_argument('chkstaff_id',type=str,required=True, location=['form'])
-        parser.add_argument('chk_date', type=datetime, required=True, location=['form'])
-        req_data = parser.parse_args()
-        print(req_data)
-        sku = Sku.create(
-            sku_id = req_data['sku_id'],
-            chkstaff_id = req_data['chkstaff_id'],
-            chk_date = req_data['chk_date'],
-            chk_amount = 10
-        )
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('sku_id', type=str,required=True, location=['form'])
+            parser.add_argument('chkstaff_id',type=str,required=True, location=['form'])
+            parser.add_argument('chk_date', type=datetime, required=True, location=['form'])
+            req_data = parser.parse_args()
+            print(req_data)
+            sku = Sku.create(
+             sku_id = req_data['sku_id'],
+             chkstaff_id = req_data['chkstaff_id'],
+             chk_date = req_data['chk_date'],
+             chk_amount = 10
+            )
+            db.session.add(sku)
+            db.session.commit()
+        except Exception as e:  
+            return {'message':'Error'}
+         
         return {'sku_id': sku.sku_id}
+        
 
     def put(self, sku_id):
         parser = reqparse.RequestParser()
@@ -103,5 +111,34 @@ class SkuDataController(Resource):
             'title': 'sku_data'
             } 
             return  sku_json                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-        
 
+class AddSkuController(Resource):
+
+    LIST_URL = "/addsku/"
+    parser=reqparse.RequestParser()
+    parser.add_argument('sku_id',required=True, help='Sku id is required',location=['form'])
+    parser.add_argument('product_id',required=True, help='Product id is required',location=['form'])
+    parser.add_argument('sku_code',required=True, help='Sku code is required',location=['form'])
+    parser.add_argument('sell_price',required=True, help='Sell price is required',location=['form'])
+    parser.add_argument('recom_price',required=True, help='Recom price is required',location=['form'])
+    parser.add_argument('cost',required=True, help='Cost is required',location=['form'])
+    parser.add_argument('stock_quantity',required=True, help='Stock_quantity is required',location=['form'])
+
+
+    def get(self):
+        try:
+            select_list = Sku.createSku_selectList()
+            return select_list
+        except Exception as e:
+            print (e)
+            return {"error message":f'{e}'}
+
+
+    def post(self):
+        try:
+            arg =self.parser.parse_args()
+            message = (Sku.createSku(arg["sku_id"],{arg["product_id"]},arg["sku_code"],arg["sell_price"],arg["recom_price"],arg["cost"],arg["stock_quantity"]))
+            return {'message':f'insert {message}'},200
+        except Exception as e:
+            print (e)
+            return {"error message":'Unable to add stock record'}
