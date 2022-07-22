@@ -1,6 +1,6 @@
 from db import db
-from application.models.chkrecord import ChkRecord
 from application.orm.sku import SkuORM
+from sqlalchemy import select
 
 
 class Sku(db.Model):
@@ -20,14 +20,36 @@ class Sku(db.Model):
         return sku_json
 
     def createSku_selectList():
-        chkrecord_list = db.session.query(ChkRecord).all()
+         skurecord_list = db.session.query(Sku).all()
 
-        SkuAdd_list_json = {
-            'data': {
-                'chkrecord_list':{'chkrec_id':[record.chkrec_id for record in chkrecord_list],
-                            'chk_staff':[record.chkstaff_id for record in chkrecord_list]
-                }, 
-                "title": "sku_create"
+         SkuAdd_list_json = {
+             'data': {
+                'skurecord_list':{'sku_id':[record.sku_id for record in skurecord_list],
+                                  'product_id':[record.product_id for record in skurecord_list],
+                                  'sku_code':[record.sku_code for record in skurecord_list],
+                                  'sell_price':[record.sell_price for record in skurecord_list],
+                                  'recom_price':[record.recom_price for record in skurecord_list],
+                                  'cost':[record.cost for record in skurecord_list],
+                                  'stock_quantity':[record.stock_quantity for record in skurecord_list],}
+                                 }, 
+                                "title": "sku_create"
+                      }
+         
+         return SkuAdd_list_json
+    
+
+    def skurecord_list(self):
+        skurecord_list = db.session.query(select(self.product_id)).all()
+        sku_json = {
+            'skurecord_list': {
+                'sku_id': [record.to_json() for record in skurecord_list],
+                'product_id': [record.to_json() for record in skurecord_list],
+                'sku_code': [record.to_json() for record in skurecord_list],
+                'sell_price': [record.to_json() for record in skurecord_list],
+                'recom_price': [record.to_json() for record in skurecord_list],
+                'cost': [record.to_json() for record in skurecord_list],
+                'stock_quantity': [record.to_json() for record in skurecord_list],
             }
-        }
-        return SkuAdd_list_json
+            
+        }  
+        return sku_json

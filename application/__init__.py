@@ -1,5 +1,4 @@
 from flask import Flask
-from sku import *
 from application.controllers import *
 
 #建立Flask APP

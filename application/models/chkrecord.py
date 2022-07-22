@@ -11,6 +11,8 @@ class ChkRecord(db.Model):
     chk_date = db.Column(db.DateTime(), nullable=False)
     chk_amount = db.Column(db.Integer, nullable=False)
 
+    db_chkrecord_sku = db.relationship("Sku",backref="chkrecord")
+
 
     @classmethod 
     def create(cls, chkrec_id, sku_id, chkstaff_id, chk_date, chk_amount):
@@ -32,16 +34,7 @@ class ChkRecord(db.Model):
         }
         return json
 
-    def chkrecord_list(self):
-        chkrecord_list = db.session.query(select(self.chkrec_id)).all()
-        chk_json = {
-            'chkrecord_list': {        
-                'chkrec_id': [record.to_json() for record in chkrecord_list],
-                'chkstaff_id': self.chkstaff_id,
-            }
-            
-        }  
-        return chk_json
+
 
 
 
